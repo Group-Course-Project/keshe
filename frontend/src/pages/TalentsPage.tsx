@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Alert, Button, Card, Col, Row, Select, Space, Spin, Table, Tag } from 'antd'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { fetchTalentItems, fetchTalentSchools } from '../api'
 import type { TalentItem, TalentSchoolsResponse } from '../types'
 
@@ -80,7 +81,12 @@ export default function TalentsPage() {
                   size="small"
                   scroll={{ x: 'max-content' }}
                   columns={[
-                    { title: '学校', dataIndex: 'name' },
+                    {
+                      title: '学校', dataIndex: 'name',
+                      render: (v: string, r: { id: number }) => (
+                        <Link to={`/schools/${r.id}`}>{v}</Link>
+                      ),
+                    },
                     { title: '城区', dataIndex: 'district', width: 90 },
                     { title: '性质', dataIndex: 'school_type', width: 80 },
                     {

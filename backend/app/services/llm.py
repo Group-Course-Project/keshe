@@ -13,7 +13,12 @@ def _env(name: str, default: str = "") -> str:
     return os.getenv(name, default).strip()
 
 
-def fallback_report(predicted_rank: int, grouped: dict, preferences: dict | None = None) -> str:
+def fallback_report(
+    predicted_rank: int,
+    grouped: dict,
+    preferences: dict | None = None,
+    school_context: str = "",
+) -> str:
     school_pref = (preferences or {}).get("school_type_preference") or "不限"
     require_dormitory = bool((preferences or {}).get("require_dormitory"))
     lines = [
@@ -57,6 +62,8 @@ def fallback_report(predicted_rank: int, grouped: dict, preferences: dict | None
         lines.append("- 你要求住宿：住宿和走读差的不只是钱，还有每天的通勤，提前算清楚。")
     if school_pref == "不限" and not require_dormitory:
         lines.append("- 公办/民办、住宿/走读的成本差异，建议和家里摊开算一笔。")
+    if school_context:
+        lines += ["", "## 学校补充信息（公开招生资料，非官方投档线）", "", school_context]
     lines += [
         "",
         "## 风险提示",
@@ -67,14 +74,25 @@ def fallback_report(predicted_rank: int, grouped: dict, preferences: dict | None
 
 
 def generate_report(
-    predicted_rank: int, grouped: dict, preferences: dict | None = None
+    predicted_rank: int,
+    grouped: dict,
+    preferences: dict | None = None,
+    school_context: str = "",
 ) -> tuple[str, str, bool]:
-    """返回 (报告内容, 模型名, 是否使用了降级模板)"""
+    """返回 (报告内容, 模型名, 是否使用了降级模板)
+
+    school_context 为外部采集知识库拼出的学校公开资料摘要（收费/地址/食宿/招生计划/特色）。
+    为空时行为与升级前完全一致，保证无知识库数据也能正常降级。
+    """
     api_key = _env("DEEPSEEK_API_KEY")
     base_url = _env("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
     model = _env("DEEPSEEK_MODEL", "deepseek-chat")
     if not api_key:
-        return fallback_report(predicted_rank, grouped, preferences), "mock", True
+        return (
+            fallback_report(predicted_rank, grouped, preferences, school_context),
+            "mock",
+            True,
+        )
 
     compact = {"冲": [], "稳": [], "保": []}
     for tier in ("冲", "稳", "保"):
@@ -92,6 +110,8 @@ def generate_report(
         "你是一名经验丰富的西安中考志愿咨询师，风格直白、风趣、不灌鸡汤，说话像靠谱的长辈。"
         "必须短句、节奏快：先给结论，再讲现实代价，最后给可执行方案，结尾用一句金句收束。"
         "不要夸大任何学校的录取确定性，不要承诺录取结果，不编造分数线和招生计划，必须提醒以官方数据为准。"
+        "若提供了「学校公开资料」，只能引用其中明确写出的收费、地址、食宿、招生计划与办学特色，"
+        "不得据此推断或补充未给出的数值；该资料来自公开招生简章，不是官方投档线。"
     )
     user_lines = [
         f"考生预估位次：{predicted_rank}",
@@ -112,9 +132,14 @@ def generate_report(
         user_lines.append("考生家庭背景线索：")
         user_lines.extend("- " + h for h in hints)
         user_lines.append("")
+    if school_context:
+        user_lines.append("学校公开资料（来自公开招生简章，仅供引用，不得推断未列出的数据）：")
+        user_lines.append(school_context)
+        user_lines.append("")
     user_lines += [
         "请用 Markdown 输出，包含：总体判断、冲/稳/保逐档分析、填报顺序建议、风险提示。",
-        "控制在 600 字以内，语言面向家长，幽默但不轻浮，不输出“推荐购买”类广告。",
+        "若资料里有学费/住宿/食宿信息，可在「现实的账」里自然提一句，别堆数据。",
+        "控制在 700 字以内，语言面向家长，幽默但不轻浮，不输出“推荐购买”类广告。",
     ]
     user = "\n".join(user_lines)
     try:
@@ -128,4 +153,8 @@ def generate_report(
         )
         return resp.choices[0].message.content or "", model, False
     except Exception:
-        return fallback_report(predicted_rank, grouped, preferences), "mock", True
+        return (
+            fallback_report(predicted_rank, grouped, preferences, school_context),
+            "mock",
+            True,
+        )
