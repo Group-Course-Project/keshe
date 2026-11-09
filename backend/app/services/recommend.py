@@ -74,6 +74,11 @@ def recommend(db: Session, predicted_rank: int, target_districts: list[str],
     schools = db.scalars(select(School)).all()
     candidates = []
     for s in schools:
+        # v0.5：知识库补录的学校只有招生计划/录取线，没有历年位次。
+        # 显式跳过，与原先 _rank_stats 返回 None 时 continue 的结果完全一致，
+        # 但省掉每所新增学校的位次/特长查询，也避免误把空数据当「保底」。
+        if (s.data_completeness or "full") != "full":
+            continue
         # 硬性过滤
         if target_districts and s.district not in target_districts:
             continue

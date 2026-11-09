@@ -1,0 +1,393 @@
+<!-- https://epaper.sanqin.com/html/202507/19/content_913578.html | FETCHED 2026-11-08 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <!-- 强制使用IE最先内核渲染页面 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <meta
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+        name="viewport">
+
+    
+        <title>西北大学附属中学 西大附中浐灞中学-三秦都市报数字报-三秦网</title>
+
+
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+  <!--css-->
+  <link rel="stylesheet" type="text/css" href="/resource/css/pccalendar.css" />
+<link rel="stylesheet" type="text/css" href="/resource/css/pcbasic.css" />
+<script>
+(function () {
+    var ua = navigator.userAgent || '';
+    var platform = navigator.platform || '';
+    var isWindowsDesktop = platform.indexOf('Win') === 0; // Win32/Win64
+    var isMacDesktop = platform.indexOf('Mac') === 0 && !('ontouchstart' in window); // 排除 iPad Pro 等
+    var isDesktop = isWindowsDesktop || isMacDesktop || platform.indexOf('Linux x86_64') === 0;
+
+    // 移动设备 UA 检测（覆盖手机和平板）
+    var isMobileByUA = /Mobile|Android|webOS|iPhone|iPod|BlackBerry|iPad|Phone|SymbianOS|Windows Phone|IEMobile|Opera Mini|Mobi|Tablet|Silk|Kindle|PlayBook|BB10/i.test(ua);
+
+    // 屏幕宽度检测（放宽到 1024px 覆盖平板横屏，但排除桌面大屏）
+    var isMobileByScreen = window.innerWidth <= 992;
+
+    // 触摸能力检测（仅当非桌面平台且屏幕较小时才启用）
+    var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var isMobileByTouch = hasTouch && !isDesktop && isMobileByScreen;
+
+    // 综合判断
+    var isMobile = isMobileByUA || isMobileByScreen || isMobileByTouch;
+
+    if (!isMobile) return;
+
+    var path = window.location.pathname;
+    if (/^\/html\//.test(path)) {
+        var newPath = path.replace(/^\/html\//, '/pad/content/');
+        window.location.replace(window.location.origin + newPath + window.location.search + window.location.hash);
+    }
+})();
+</script>
+  <link rel="stylesheet" type="text/css" href="/resource/css/article-detail.css" />
+  <link rel="stylesheet" href="/resource/css/pccalendar.css" />
+  <!--//css-->    
+</head>
+
+<body>
+    
+        <div id="app-wrapper">
+            <div id="app">
+                <!--header-->
+                <div class="header"><a href="https://www.sanqin.com/"><img src="https://pic.sanqin.com/pic/sqlogo.png" alt="三秦网" class="logo"></a></div>
+                <!--//header-->
+                <div class="paper-content-container" id="paper-content-container" style="display: flex;">
+                    <div class="gback"><a class="f-btn" onclick="backPre(this)" data-href="https://epaper.sanqin.com/html/202507/19node_T04.html"><i></i>返<br>回</a></div>
+                    <div class="wangqi">
+                    <a href="javascript:;" class="wangqi_rili"><i></i>往<br>期<br>浏<br>览</a>
+                    <a href="javascript:;" class="wangqi_prev" id="previousJournal"><i></i>上<br>一<br>期</a>
+                    <a href="javascript:;" class="wangqi_next" id="nextJournal">下<br>一<br>期<i></i></a>
+                    </div>
+                    <span class="switchJournal" data-paperdate="2025-07-19" style="display:none">发布日期：2025-07-19</span>
+                    <!--日历-->
+                    <div class="timelist hidden" id="timelist">
+                    <div id="calendar">
+                    <div class="monthList">
+                    <div class="button" onClick="shangYear(event)"><img
+                        src="/resource/img/calendar-left-year.png">
+                    </div>
+                    <div class="button" onClick="shang(event)"><img src="/resource/img/calendar-left.png"></div>
+                    <div id="month"></div>
+                    <div class="button" onClick="next(event)" id="nav"><img
+                        src="/resource/img/calendar-next.png">
+                    </div>
+                    <div class="button" onClick="nextYear(event)"><img
+                        src="/resource/img/calendar-next-year.png">
+                    </div>
+                    </div>
+                    <div class="weekList">
+                    <div class="evrday one">日</div>
+                    <div class="evrday one">一</div>
+                    <div class="evrday one">二</div>
+                    <div class="evrday one">三</div>
+                    <div class="evrday one">四</div>
+                    <div class="evrday one">五</div>
+                    <div class="evrday one">六</div>
+                    </div>
+                    <div id="day" style="font-size: 14px;color: #000000;"></div>
+                    </div>
+                    </div>
+                    <!--//日历-->
+                <!--二维码-->
+                <div class="qrcode"></div>
+                <!--//二维码-->
+                    <div class="paper-content" id="paper-content">
+                        <div>   
+                        <div class="right-content">
+
+                            <div id="canvas">
+                                <div class="flipbook-viewport">
+                                    <!-- logo -->
+
+                                    <!-- 小图标 -->
+                                    <div class="imgRight" style="display: none;">
+
+                                    </div>
+
+
+                                    <!-- 翻页容器 -->
+                                    <div class="container" id="container"
+                                        style="width: 520px;height: 750px;position: relative;">
+                                        <style>
+                                            * {
+                                                -webkit-box-sizing: border-box;
+                                                -moz-box-sizing: border-box;
+                                                box-sizing: border-box;
+                                            }
+
+                                            .popbox {
+                                                pointer-events: none;
+                                                display: none;
+                                                position: absolute;
+                                                background-color: #EA5521;
+                                                opacity: 0.2;
+                                            }
+
+                                            .newspaper-pic {
+                                                width: 520px;
+                                                padding-top: 0;
+                                                box-sizing: border-box;
+                                            }
+
+                                            .newspaper-pic img {
+                                                height: auto;
+                                                max-height: 750px;
+                                                width: 520px;
+                                            }
+                                        </style>
+
+                                        <canvas width="520" height="750" id="paper-canvas"
+                                            style="position: absolute; top: 0; left: 0; z-index: 9; pointer-events: none;"></canvas>
+                                        <div class="newspaper-pic" style="position: relative;">
+                                            <img class="preview" src="https://epaper.sanqin.com/pc/pic/202507/19/99185_da886063-f437-4432-be79-65dd77820b73.jpg" data-width="921" data-height="1,368" usemap="">
+                                            <MAP NAME="PagePicMap_99185"><Area  target="iframe" coords="904,713,904,694,904,564,904,480,904,352,904,303,904,88,707,88,707,303,630,315,527,315,527,330,371,352,337,319,16,319,16,480,16,486,16,694,16,713,16,1351,904,1351" shape="polygon" href="https://epaper.sanqin.com/html/202507/19/content_913578.html" topic="西北大学附属中学 西大附中浐灞中学"></MAP>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--edition-->  
+                        <div class="edition-name">
+                            <div id="edition-name-list" data-edition="T04" data-date="202507/19">
+                            <span>T04版：乘风破浪 如你所愿</span>
+                            </div>
+                            <div onclick="prePage()" class="pre-page" style="display: block;"><img src="/resource/templateRes/basic/images/edition-right-arrow.png" style="transform: rotate(180deg);">&nbsp;上一版</div>
+                            <div onclick="nextPage()" class="next-page">下一版&nbsp;<img src="/resource/templateRes/basic/images/edition-right-arrow.png" alt=""></div>
+                            <a href="/">返回首版</a>
+                        </div>                      
+                        <!--//edition-->
+                        </div>
+                        <div class="left-guide">
+                            <div class="top-menu">                
+                                <a href="/">返回首页</a>     
+				<span class="goback" onclick="backPre(this);" data-href="https://epaper.sanqin.com/html/202507/19node_T04.html">本版新闻导航</span>
+                                <span class="switchJournal" data-paperdate="2025-07-19">发布日期：2025-07-19</span>
+                            </div>
+                            <div class="wrap" id="wrap">
+                                <!-- 详情 -->
+                                <div class="detailBtns">
+
+                                    <div class="page-change">
+
+
+                                                <div class="previous" style="visibility: hidden;"><a
+                                                        href="javascript:void(0);"><img
+                                                            src="/templateRes/basic/images/detail-pre-page.png" alt=""
+                                                            class="link-img"><span class="link-text">上一篇</span></a>
+                                                </div>
+
+
+
+                                                <div class="next" style="visibility: hidden;"><a
+                                                        href="javascript:void(0);"><span
+                                                            class="link-text">下一篇</span><img
+                                                            src="/templateRes/basic/images/detail-next-page.png" alt=""
+                                                            class="link-img"></a> </div>
+
+
+
+                                    </div>
+
+                                
+
+                                </div>
+
+                                <div class="newsshow" id="ScroLeft">
+
+                                    <div class="newsdetatit">
+
+
+                                            <h3 class="paper-title">西北大学附属中学 西大附中浐灞中学</h3>
+
+
+
+                                        <div class="paper-info">
+                                            <div class="left-tool">
+                                                <span class="paper-author">
+                                                </span>
+                                                <div class="toolicon">
+                                                    <span class="fonts-icon-plus" onclick="changeFont('large')">
+                                                    </span>
+                                                    <span class="fonts-icon" onclick="changeFont('small')">
+                                                    </span>
+
+                                                </div>
+
+                                                <span class="share-wx"><img src="/templateRes/basic/images/share-wx.png"
+                                                        alt="微信分享图标" class="detail-share-icon detail-share-btn"></span>
+                                            </div>
+                                            <span class="paper-layout">
+                                                    2025年07月19日
+                                                版次：T04
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="newsdetatext">
+                                        <div id="ozoom">
+                                            <!-- 内容 -->
+                                            <founder-content>
+                                                <p><img src="../../../pc/pic/202507/19/913578_96719497-43df-4d3f-8a16-fe7ce4ca3f7a_l.jpg" style="max-width:100%;height:auto;" id="443,288501"></p>
+<p><img src="../../../pc/pic/202507/19/913578_416fe53d-b0d5-401b-b80a-618e8f4bef7b_l.jpg" style="max-width:100%;height:auto;" id="443,288504"></p>
+<p><img src="../../../pc/pic/202507/19/913578_64bfb180-a752-42ad-8cc3-24039ce640c9_l.jpg" style="max-width:100%;height:auto;" id="443,288516"></p>
+<p style="text-indent: 2em ;">古筝社团。</p>
+<p><img src="../../../pc/pic/202507/19/913578_bcf53eae-2475-48c3-81a8-f7530ff53bf8_l.jpg" style="max-width:100%;height:auto;" id="443,288502"></p>
+<p><img src="../../../pc/pic/202507/19/913578_c76194dc-5b7e-4a32-8672-33535ab72029_l.jpg" style="max-width:100%;height:auto;" id="443,288511"></p>
+<p style="text-indent: 2em ;">李浩教授报告会。</p>
+<p><img src="../../../pc/pic/202507/19/913578_ee58ff6f-8b8e-45d0-810c-f1aefdd3f772_l.jpg" style="max-width:100%;height:auto;" id="443,288514"></p>
+<p style="text-indent: 2em ;">国际青少年足球邀请赛。</p>
+<p><img src="../../../pc/pic/202507/19/913578_7b95e1e9-b789-4c7b-9fd7-731e810eaeae_l.jpg" style="max-width:100%;height:auto;" id="443,288509"></p>
+<p style="text-indent: 2em ;">参观西北大学博物馆。</p>
+<p><img src="../../../pc/pic/202507/19/913578_9dc7d2ae-7373-47c3-b936-a36b13e3857c_l.jpg" style="max-width:100%;height:auto;" id="443,288505"></p>
+<p><img src="../../../pc/pic/202507/19/913578_319da0b2-da09-44ea-8517-76ae9a2fa7de_l.jpg" style="max-width:100%;height:auto;" id="443,288517"></p>
+<p style="text-indent: 2em ;">成人仪式。</p>
+<p><img src="../../../pc/pic/202507/19/913578_644dcd8a-0188-40a5-ac4d-c70c94eed2d2_l.jpg" style="max-width:100%;height:auto;" id="443,288521"></p>
+<p style="text-indent: 2em ;">研学旅行。</p>
+<p><img src="../../../pc/pic/202507/19/913578_68422a3e-62c8-425a-9233-9b54537559b3_l.jpg" style="max-width:100%;height:auto;" id="443,288510"></p>
+<p style="text-indent: 2em ;">舒德干院士报告会。</p>
+<p><img src="../../../pc/pic/202507/19/913578_28c8d9d5-f7ca-41d4-a5ce-4e05eece6d5e_l.jpg" style="max-width:100%;height:auto;" id="443,288515"></p>
+<p style="text-indent: 2em ;">击剑社团。</p>
+<p><img src="../../../pc/pic/202507/19/913578_18157306-a8d3-4b0c-b7b3-06e10181b95f_l.jpg" style="max-width:100%;height:auto;" id="443,288503"></p>
+<p><img src="../../../pc/pic/202507/19/913578_2ca6ed6e-808a-45c2-bd9c-63f93620d3fa_l.jpg" style="max-width:100%;height:auto;" id="443,288506"></p>
+<p style="text-indent: 2em ;">开学典礼。</p>
+<p><img src="../../../pc/pic/202507/19/913578_f91ea1b4-7414-41b0-9307-20146f6edae1_l.jpg" style="max-width:100%;height:auto;" id="443,288507"></p>
+<p style="text-indent: 2em ;">中小学丝路文化教育基地揭牌仪式。</p>
+<p><img src="../../../pc/pic/202507/19/913578_464f875c-1301-45ba-969b-6aacaacb3836_l.jpg" style="max-width:100%;height:auto;" id="443,288513"></p>
+<p style="text-indent: 2em ;">合唱艺术节。</p>
+<p><img src="../../../pc/pic/202507/19/913578_2f577754-153a-4739-ac19-4a9430c3bdc8_l.jpg" style="max-width:100%;height:auto;" id="443,288508"></p>
+<p style="text-indent: 2em ;">课后服务实践共同体签约仪式。</p>
+<p><img src="../../../pc/pic/202507/19/913578_c86e898b-0117-4aaf-965a-0685998bad06_l.jpg" style="max-width:100%;height:auto;" id="443,288519"></p>
+<p style="text-indent: 2em ;">魅力科技节。</p>
+<p><img src="../../../pc/pic/202507/19/913578_262e1bfd-4650-4095-887c-6cfb5cef7887_l.jpg" style="max-width:100%;height:auto;" id="443,288512"></p>
+<p style="text-indent: 2em ;">参加西北大学诺奖论坛。</p>
+<p><img src="../../../pc/pic/202507/19/913578_0eb6d082-ca78-4692-85fa-30b25973367a_l.jpg" style="max-width:100%;height:auto;" id="443,288518"></p>
+<p style="text-indent: 2em ;">经典阅读节。</p>
+<p><img src="../../../pc/pic/202507/19/913578_53680d4d-d275-44a2-8632-c3f1df89a938_l.jpg" style="max-width:100%;height:auto;" id="443,288520"></p>
+<p style="text-indent: 2em ;">腰鼓社团。</p>
+<p><img src="../../../pc/pic/202507/19/913578_e9ea0e39-7ac4-48e0-9c11-ebb602d26043_l.jpg" style="max-width:100%;height:auto;" id="443,288522"></p>
+<p style="text-indent: 2em ;">体育文化节。</p>
+<p style="text-indent: 2em ;">西北大学附属中学 招生代码 010119</p>
+<p style="text-indent: 2em ;">西大附中浐灞中学招生代码 010532</p>
+<p style="text-indent: 2em ;">集团化办学 一体化管理</p>
+<p style="text-indent: 2em ;">西北大学附属中学1912年创建，1960年重建，1997年晋升省级重点中学，2011年晋升省级示范中学。2024年高中录取分数线627.5分。</p>
+<p style="text-indent: 2em ;">西大附中浐灞中学2015年创建，2018年晋升省级标准化中学，2020年晋升市级名校。2024年高中录取分数线602.1分。</p>
+<p style="text-indent: 2em ;">两校实行一体化管理，统一课程设置，统一师资调配，统一过程管理，统一质量监测。</p>
+<p style="text-indent: 2em ;">大学里的中学 中学里的大学</p>
+<p style="text-indent: 2em ;">学校聘请西北大学舒德干、李浩、李保国等院士和知名教授为特聘教师，为学生开设选修课和竞赛辅导班，指导学生研究性学习和社团活动。西北大学图书馆、博物馆、实验室等对学生开放，学生课后服务形式多样、富有成效。与大师对话，在科学家、文学家身边成长，学生挺膺担当，奋楫争先。</p>
+<p style="text-indent: 2em ;">高考综合改革以来，学校重视学生生涯规划和学业发展指导。聘请西北大学教授等专业人士，指导学生选学科、选大学、选专业。根据学生意愿，学校开设各种选课组合班，最大限度满足学生个性化发展需要。</p>
+<p style="text-indent: 2em ;">用教育家精神强师铸魂</p>
+<p style="text-indent: 2em ;">西北大学附属中学和西大附中浐灞中学现有教职工400余人，其中特级教师5人，正高级教师15人，国家级教学名师1人，省级教学名师、学科带头人、教学能手40余人。获国家级教学成果奖1项，省级教学成果奖15项，其中特等奖3项。</p>
+<p style="text-indent: 2em ;">招生计划</p>
+<p style="text-indent: 2em ;">西北大学附属中学320人， 西大附中浐灞中学720人。</p>
+<p style="text-indent: 2em ;">班型设置</p>
+<p style="text-indent: 2em ;">西北大学附属中学：</p>
+<p style="text-indent: 2em ;">强基班（与西北大学数学、物理、化材、生科、信息、地质等院系合作，聘请院系知名教授参与授课，开设讲座，进行竞赛辅导。）</p>
+<p style="text-indent: 2em ;">科学院实验班（与中国科学院西安分院合作，聘请分院中青年科学家开设讲座，学生赴中科院相关机构研学。）</p>
+<p style="text-indent: 2em ;">创新班 国际班</p>
+<p style="text-indent: 2em ;">西大附中浐灞中学：</p>
+<p style="text-indent: 2em ;">强基班（与西北大学数学、物理、化材、生科、信息、地质等院系合作，聘请院系知名教授参与授课，开设讲座，进行竞赛辅导。）</p>
+<p style="text-indent: 2em ;">附中联办班（与西北大学附中联办，聘请附中优秀教师参与授课，开设讲座，进行竞赛辅导。）</p>
+<p style="text-indent: 2em ;">实验班 创新班</p>
+<p style="text-indent: 2em ;">构建四大体系 培育核心素养</p>
+<p style="text-indent: 2em ;">学校积极构建包括课程体系、课后服务体系、家校社共育体系、综合素质评价体系在内的立德树人新生态新格局，强化核心素养培育，促进学生全面发展。经典阅读节、合唱艺术节、魅力科技节、体育文化节等四大主题节日，成为全校师生一年一度的文化盛宴。</p>
+<p style="text-indent: 2em ;">西北大学附属中学和西大附中浐灞中学的高考成绩一直在全省保持领先地位。一批学生考入清华、北大、浙大、复旦、上海交大、南大、中科大等国内一流大学学习，或赴美国、英国、法国、德国、日本等国的世界知名大学深造，广大毕业生成为强国建设、民族复兴的栋梁之材。</p>
+<p style="text-indent: 2em ;">学校地址：</p>
+<p style="text-indent: 2em ;">西北大学附属中学 学校地址：高新四路西北大学桃园校区 联系电话：（029）88363909 88363917</p>
+<p style="text-indent: 2em ;">西大附中浐灞中学 学校地址：浐灞国际港浐灞二路 联系电话：（029）86685526 86685520</p>
+<p style="text-indent: 2em ;">学校公告：</p>
+<p style="text-indent: 2em ;">我校定于7月18日——21日举办校园开放日暨中招咨询活动，请广大考生和家长届时光临。</p>
+                                            </founder-content>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="btnList" style="display: none;">
+                                <div class="sound btn-item" onclick="showAudio()"><span class="btn-label-bg">翻页音</span>
+                                </div>
+                                <div class="mute btn-item" style="display: none;" onclick="showAudio()"><span
+                                        class="btn-label-bg">翻页音</span>
+                                    <img class="mute" style="display: none;" src="" />
+                                </div>
+                                <audio class="audio" src="" controlsList="nodownload"></audio>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <!--footer-->
+            <div class="footer">
+<p>互联网新闻信息许可证：61120180003&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://beian.miit.gov.cn/" target="_blank">陕ICP备05001925号-1</a>&nbsp;&nbsp;&nbsp;&nbsp;陕新网审字[2002]004号&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61010302000964"><img src="https://pic.sanqin.com/wanganbeian.png" style="float:left;">陕公网安备 61010302000964号</a></p>
+<p>©2022三秦都市报官方网站&nbsp;&nbsp;&nbsp;&nbsp;新闻热线：029-82244483&nbsp;&nbsp;&nbsp;&nbsp;邮箱：sanqincom@163.com&nbsp;&nbsp;&nbsp;&nbsp;地址：陕西省西安市长安区郭杜街道西长安街2888号</p>
+<p class="text-center">
+<a style="vertical-align:middle;" href="http://www.12377.cn/" target="_blank"><img src="https://www.sanqin.com/static/images/12377jubao.png" style="vertical-align:middle;" align="middle" height="20" width="20">&nbsp;中国互联网举报中心</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.shaanxijubao.cn/" target="_blank">陕西互联网违法和不良信息举报电话：029-63907152&nbsp;&nbsp;&nbsp;&nbsp;举报邮箱：shxiwxb@126.com</a>
+</p>
+</div>
+            <!--//footer-->
+            <!-- 微信分享弹窗 -->
+            <div id="wxShareOverlay" class="wx-share-overlay"
+                style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;">
+                <div class="wx-share-modal" role="dialog" aria-modal="true" aria-label="微信分享"
+                    style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:320px;background:#fff;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.2);padding:16px;">
+                    <div class="wx-share-header"
+                        style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                        <div class="wx-share-title"
+                            style="font-size:16px;font-weight:600;color:#333;text-align: center;width: 100%;">
+                            分享到微信好友</div>
+                        <button id="wxShareClose" type="button" aria-label="关闭"
+                            style="border:none;background:transparent;font-size:20px;line-height:1;color:#999;cursor:pointer;">×</button>
+                    </div>
+                    <div class="wx-share-body" style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                        <div id="wxShareCanvas" style="width:210px;height:210px;"></div>
+                        <div class="wx-share-tip" style="font-size:12px;color:#666;">打开微信，点击底部的“发现”，<br />
+                            使用“扫一扫”即可将网页分享至好友。</div>
+                        <div class="wx-share-url"
+                            style="font-size:12px;color:#333;word-break:break-all;text-align:center;display: none;">
+                            链接：<a id="wxShareUrlLink" href="#" target="_blank" rel="noopener"
+                                style="color:#1a73e8;text-decoration:underline;"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <span class="url" style="display: none;">https://appif.sxdaily.com.cn</span>
+            <span class="dateTime" style="display: none;">2025-07-19</span>
+            <span class="paperId" style="display: none;">21</span>
+            <span class="siteId" style="display: none;">3</span>
+            <span class="aritcleId" style="display: none;">913578</span>
+            <span class="articleType" style="display: none;">0</span>
+
+
+</body>
+
+</html>
+<!--js-->
+<script type="text/javascript" src="/resource/templateRes/basic/extras/jquery.min.js"></script>
+<script src="/resource/templateRes/basic/lib/qrcode.min.js?v=20251118"></script>
+<script type="text/javascript" src="/resource/js/lunar.min.js"></script>
+<script type="text/javascript" src="/resource/templateRes/basic/js/sm2.js" charset="utf-8"></script>
+<script type="text/javascript" src="/resource/templateRes/basic/extras/modernizr.2.5.3.min.js"></script>
+<script src="/resource/js/article.js"></script>
+<script type="text/javascript" src="/resource/js/pccalendar.js" charset="utf-8"></script>
+<!--//js-->  

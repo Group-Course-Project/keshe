@@ -1,4 +1,11 @@
-fastapi
-uvicorn[standard]
-sqlalchemy
-pydantic
+# 后端运行时 + 数据导入依赖（已在 Python 3.13 验证）
+fastapi>=0.115
+uvicorn[standard]>=0.30
+sqlalchemy>=2.0
+pydantic>=2.0
+# llm.py 通过 load_dotenv 读取 backend/.env
+python-dotenv>=1.0
+# 配置 DEEPSEEK_API_KEY 后由 llm.py 延迟导入；未配置时走规则降级模板
+openai>=1.0
+# import_talent.py 解析 data/raw 下的招生计划 PDF
+pdfplumber>=0.11

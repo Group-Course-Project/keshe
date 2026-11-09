@@ -1,0 +1,339 @@
+<!-- SOURCE_URL: see manifest | FETCHED: 2026-11-08 | ENCODING: utf-8 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <!-- 强制使用IE最先内核渲染页面 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <meta
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+        name="viewport">
+
+    
+        <title>西安交通大学附属中学航天高级中学-三秦都市报数字报-三秦网</title>
+
+
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+  <!--css-->
+  <link rel="stylesheet" type="text/css" href="/resource/css/pccalendar.css" />
+<link rel="stylesheet" type="text/css" href="/resource/css/pcbasic.css" />
+<script>
+(function () {
+    var ua = navigator.userAgent || '';
+    var platform = navigator.platform || '';
+    var isWindowsDesktop = platform.indexOf('Win') === 0; // Win32/Win64
+    var isMacDesktop = platform.indexOf('Mac') === 0 && !('ontouchstart' in window); // 排除 iPad Pro 等
+    var isDesktop = isWindowsDesktop || isMacDesktop || platform.indexOf('Linux x86_64') === 0;
+
+    // 移动设备 UA 检测（覆盖手机和平板）
+    var isMobileByUA = /Mobile|Android|webOS|iPhone|iPod|BlackBerry|iPad|Phone|SymbianOS|Windows Phone|IEMobile|Opera Mini|Mobi|Tablet|Silk|Kindle|PlayBook|BB10/i.test(ua);
+
+    // 屏幕宽度检测（放宽到 1024px 覆盖平板横屏，但排除桌面大屏）
+    var isMobileByScreen = window.innerWidth <= 992;
+
+    // 触摸能力检测（仅当非桌面平台且屏幕较小时才启用）
+    var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    var isMobileByTouch = hasTouch && !isDesktop && isMobileByScreen;
+
+    // 综合判断
+    var isMobile = isMobileByUA || isMobileByScreen || isMobileByTouch;
+
+    if (!isMobile) return;
+
+    var path = window.location.pathname;
+    if (/^\/html\//.test(path)) {
+        var newPath = path.replace(/^\/html\//, '/pad/content/');
+        window.location.replace(window.location.origin + newPath + window.location.search + window.location.hash);
+    }
+})();
+</script>
+  <link rel="stylesheet" type="text/css" href="/resource/css/article-detail.css" />
+  <link rel="stylesheet" href="/resource/css/pccalendar.css" />
+  <!--//css-->    
+</head>
+
+<body>
+    
+        <div id="app-wrapper">
+            <div id="app">
+                <!--header-->
+                <div class="header"><a href="https://www.sanqin.com/"><img src="https://pic.sanqin.com/pic/sqlogo.png" alt="三秦网" class="logo"></a></div>
+                <!--//header-->
+                <div class="paper-content-container" id="paper-content-container" style="display: flex;">
+                    <div class="gback"><a class="f-btn" onclick="backPre(this)" data-href="https://epaper.sanqin.com/html/202507/19node_T02.html"><i></i>返<br>回</a></div>
+                    <div class="wangqi">
+                    <a href="javascript:;" class="wangqi_rili"><i></i>往<br>期<br>浏<br>览</a>
+                    <a href="javascript:;" class="wangqi_prev" id="previousJournal"><i></i>上<br>一<br>期</a>
+                    <a href="javascript:;" class="wangqi_next" id="nextJournal">下<br>一<br>期<i></i></a>
+                    </div>
+                    <span class="switchJournal" data-paperdate="2025-07-19" style="display:none">发布日期：2025-07-19</span>
+                    <!--日历-->
+                    <div class="timelist hidden" id="timelist">
+                    <div id="calendar">
+                    <div class="monthList">
+                    <div class="button" onClick="shangYear(event)"><img
+                        src="/resource/img/calendar-left-year.png">
+                    </div>
+                    <div class="button" onClick="shang(event)"><img src="/resource/img/calendar-left.png"></div>
+                    <div id="month"></div>
+                    <div class="button" onClick="next(event)" id="nav"><img
+                        src="/resource/img/calendar-next.png">
+                    </div>
+                    <div class="button" onClick="nextYear(event)"><img
+                        src="/resource/img/calendar-next-year.png">
+                    </div>
+                    </div>
+                    <div class="weekList">
+                    <div class="evrday one">日</div>
+                    <div class="evrday one">一</div>
+                    <div class="evrday one">二</div>
+                    <div class="evrday one">三</div>
+                    <div class="evrday one">四</div>
+                    <div class="evrday one">五</div>
+                    <div class="evrday one">六</div>
+                    </div>
+                    <div id="day" style="font-size: 14px;color: #000000;"></div>
+                    </div>
+                    </div>
+                    <!--//日历-->
+                <!--二维码-->
+                <div class="qrcode"></div>
+                <!--//二维码-->
+                    <div class="paper-content" id="paper-content">
+                        <div>   
+                        <div class="right-content">
+
+                            <div id="canvas">
+                                <div class="flipbook-viewport">
+                                    <!-- logo -->
+
+                                    <!-- 小图标 -->
+                                    <div class="imgRight" style="display: none;">
+
+                                    </div>
+
+
+                                    <!-- 翻页容器 -->
+                                    <div class="container" id="container"
+                                        style="width: 520px;height: 750px;position: relative;">
+                                        <style>
+                                            * {
+                                                -webkit-box-sizing: border-box;
+                                                -moz-box-sizing: border-box;
+                                                box-sizing: border-box;
+                                            }
+
+                                            .popbox {
+                                                pointer-events: none;
+                                                display: none;
+                                                position: absolute;
+                                                background-color: #EA5521;
+                                                opacity: 0.2;
+                                            }
+
+                                            .newspaper-pic {
+                                                width: 520px;
+                                                padding-top: 0;
+                                                box-sizing: border-box;
+                                            }
+
+                                            .newspaper-pic img {
+                                                height: auto;
+                                                max-height: 750px;
+                                                width: 520px;
+                                            }
+                                        </style>
+
+                                        <canvas width="520" height="750" id="paper-canvas"
+                                            style="position: absolute; top: 0; left: 0; z-index: 9; pointer-events: none;"></canvas>
+                                        <div class="newspaper-pic" style="position: relative;">
+                                            <img class="preview" src="https://epaper.sanqin.com/pc/pic/202507/19/99183_efc1a699-109a-4e5d-804f-2563d1660498.jpg" data-width="921" data-height="1,368" usemap="">
+                                            <MAP NAME="PagePicMap_99183"><Area  target="iframe" coords="908,388,908,324,908,290,908,285,908,82,461,82,11,75,15,176,15,388,15,416,15,495,245,495,245,416,161,416,161,410,258,403,258,495,908,495" shape="polygon" href="https://epaper.sanqin.com/html/202507/19/content_913572.html" topic="西安交通大学附属中学"><Area  target="iframe" coords="20,512,904,512,904,799,20,799" shape="polygon" href="https://epaper.sanqin.com/html/202507/19/content_913573.html" topic="创新港西安交通大学附属中学"><Area  target="iframe" coords="902,990,902,968,902,960,902,925,902,921,902,812,529,812,529,868,212,876,212,887,18,887,18,1002,212,1002,212,1009,18,1009,18,1069,638,1069,638,960,660,960,660,968,660,1069,902,1069" shape="polygon" href="https://epaper.sanqin.com/html/202507/19/content_913574.html" topic="西安交通大学附属中学航天高级中学"><Area  target="iframe" coords="898,1277,898,1274,821,1274,821,1277,653,1277,653,1270,898,1270,898,1200,898,1199,898,1084,654,1084,654,1199,653,1200,638,1178,638,1140,638,1084,510,1084,510,1140,467,1152,193,1152,193,1174,425,1178,425,1184,236,1184,236,1268,425,1268,425,1285,230,1285,230,1178,18,1178,18,1341,898,1341" shape="polygon" href="https://epaper.sanqin.com/html/202507/19/content_913575.html" topic="西咸新区空港实验高级中学"></MAP>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--edition-->  
+                        <div class="edition-name">
+                            <div id="edition-name-list" data-edition="T02" data-date="202507/19">
+                            <span>T02版：乘风破浪 如你所愿</span>
+                            </div>
+                            <div onclick="prePage()" class="pre-page" style="display: block;"><img src="/resource/templateRes/basic/images/edition-right-arrow.png" style="transform: rotate(180deg);">&nbsp;上一版</div>
+                            <div onclick="nextPage()" class="next-page">下一版&nbsp;<img src="/resource/templateRes/basic/images/edition-right-arrow.png" alt=""></div>
+                            <a href="/">返回首版</a>
+                        </div>                      
+                        <!--//edition-->
+                        </div>
+                        <div class="left-guide">
+                            <div class="top-menu">                
+                                <a href="/">返回首页</a>     
+				<span class="goback" onclick="backPre(this);" data-href="https://epaper.sanqin.com/html/202507/19node_T02.html">本版新闻导航</span>
+                                <span class="switchJournal" data-paperdate="2025-07-19">发布日期：2025-07-19</span>
+                            </div>
+                            <div class="wrap" id="wrap">
+                                <!-- 详情 -->
+                                <div class="detailBtns">
+
+                                    <div class="page-change">
+
+
+                                            <div class="previous"><a href="content_913573.html"><img
+                                                        src="/templateRes/basic/images/detail-pre-page.png" alt=""
+                                                        class="link-img"><span class="link-text">上一篇</span></a> </div>
+
+
+
+                                            <div class="next"><a href="content_913575.html"><span
+                                                        class="link-text">下一篇</span><img
+                                                        src="/templateRes/basic/images/detail-next-page.png" alt=""
+                                                        class="link-img"></a> </div>
+
+
+
+
+                                    </div>
+
+                                
+
+                                </div>
+
+                                <div class="newsshow" id="ScroLeft">
+
+                                    <div class="newsdetatit">
+
+
+                                            <h3 class="paper-title">西安交通大学附属中学航天高级中学</h3>
+
+
+
+                                        <div class="paper-info">
+                                            <div class="left-tool">
+                                                <span class="paper-author">
+                                                </span>
+                                                <div class="toolicon">
+                                                    <span class="fonts-icon-plus" onclick="changeFont('large')">
+                                                    </span>
+                                                    <span class="fonts-icon" onclick="changeFont('small')">
+                                                    </span>
+
+                                                </div>
+
+                                                <span class="share-wx"><img src="/templateRes/basic/images/share-wx.png"
+                                                        alt="微信分享图标" class="detail-share-icon detail-share-btn"></span>
+                                            </div>
+                                            <span class="paper-layout">
+                                                    2025年07月19日
+                                                版次：T02
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="newsdetatext">
+                                        <div id="ozoom">
+                                            <!-- 内容 -->
+                                            <founder-content>
+                                                <p><img src="../../../pc/pic/202507/19/913574_5e1b4aa2-5eb3-4ab3-9bb1-e3ab68c0e27e_l.jpg" style="max-width:100%;height:auto;" id="443,288490"></p>
+<p><img src="../../../pc/pic/202507/19/913574_a5345055-1082-4c6c-8ab3-815b79903aad_l.jpg" style="max-width:100%;height:auto;" id="443,288488"></p>
+<p><img src="../../../pc/pic/202507/19/913574_a15158c1-63a6-461c-b3a4-752211d1184d_l.jpg" style="max-width:100%;height:auto;" id="443,288489"></p>
+<p><img src="../../../pc/pic/202507/19/913574_2e9feebe-20cb-400e-85fe-a4380f82b628_l.jpg" style="max-width:100%;height:auto;" id="443,288487"></p>
+<p style="text-indent: 2em ;">学校二维码</p>
+<p style="text-indent: 2em ;">招生代码 010443</p>
+<p style="text-indent: 2em ;">学校依托百年交大的文化传承和交大附中的管理及师资团队，以“培养终身学习者和未来引领者”为育人目标，班级管理实行双班主任制，为每位学生配备成长导师，关注学生个性发展，实现了低进高出、高进优出的教育特色。往届毕业生多被985高校、211高校录取。其中，2022届谢艺同学和2023届扈晓玉同学被北京大学录取，2024届5人被华东五校录取，2025届高分段学生再创新高。</p>
+<p style="text-indent: 2em ;">学校环境优美大气。学校图书馆被评为陕西唯一一家星级校园书屋。学生公寓为标准四人间，每层配有直饮水机和洗衣房，宿舍均配有24小时热水、独立卫浴、空调、暖气、低碳钢架床等，设施设备齐全，最大限度方便学生的日常生活需求。</p>
+<p style="text-indent: 2em ;">学校以“创办新时代未来智慧教育领航学校”为愿景，打造理工特色，努力成为一所全国顶尖的民办教育学校。</p>
+<p style="text-indent: 2em ;">学校录取分数线</p>
+<p style="text-indent: 2em ;">2024年633.5分；2023年652分；2022年650分。</p>
+<p style="text-indent: 2em ;">学校开放日：7月18日下午，19至21日全天。</p>
+<p style="text-indent: 2em ;">学校地址：西安市航天南路180号</p>
+<p style="text-indent: 2em ;">2025年预计招生计划：700人</p>
+<p style="text-indent: 2em ;">（最终以教育局公示为准）</p>
+<p style="text-indent: 2em ;">填报方式：中招志愿系统第二批次</p>
+<p style="text-indent: 2em ;">联系电话：029-89689922</p>
+                                            </founder-content>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </div>
+
+
+                            <div class="btnList" style="display: none;">
+                                <div class="sound btn-item" onclick="showAudio()"><span class="btn-label-bg">翻页音</span>
+                                </div>
+                                <div class="mute btn-item" style="display: none;" onclick="showAudio()"><span
+                                        class="btn-label-bg">翻页音</span>
+                                    <img class="mute" style="display: none;" src="" />
+                                </div>
+                                <audio class="audio" src="" controlsList="nodownload"></audio>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <!--footer-->
+            <div class="footer">
+<p>互联网新闻信息许可证：61120180003&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://beian.miit.gov.cn/" target="_blank">陕ICP备05001925号-1</a>&nbsp;&nbsp;&nbsp;&nbsp;陕新网审字[2002]004号&nbsp;&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=61010302000964"><img src="https://pic.sanqin.com/wanganbeian.png" style="float:left;">陕公网安备 61010302000964号</a></p>
+<p>©2022三秦都市报官方网站&nbsp;&nbsp;&nbsp;&nbsp;新闻热线：029-82244483&nbsp;&nbsp;&nbsp;&nbsp;邮箱：sanqincom@163.com&nbsp;&nbsp;&nbsp;&nbsp;地址：陕西省西安市长安区郭杜街道西长安街2888号</p>
+<p class="text-center">
+<a style="vertical-align:middle;" href="http://www.12377.cn/" target="_blank"><img src="https://www.sanqin.com/static/images/12377jubao.png" style="vertical-align:middle;" align="middle" height="20" width="20">&nbsp;中国互联网举报中心</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.shaanxijubao.cn/" target="_blank">陕西互联网违法和不良信息举报电话：029-63907152&nbsp;&nbsp;&nbsp;&nbsp;举报邮箱：shxiwxb@126.com</a>
+</p>
+</div>
+            <!--//footer-->
+            <!-- 微信分享弹窗 -->
+            <div id="wxShareOverlay" class="wx-share-overlay"
+                style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;">
+                <div class="wx-share-modal" role="dialog" aria-modal="true" aria-label="微信分享"
+                    style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:320px;background:#fff;border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,0.2);padding:16px;">
+                    <div class="wx-share-header"
+                        style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                        <div class="wx-share-title"
+                            style="font-size:16px;font-weight:600;color:#333;text-align: center;width: 100%;">
+                            分享到微信好友</div>
+                        <button id="wxShareClose" type="button" aria-label="关闭"
+                            style="border:none;background:transparent;font-size:20px;line-height:1;color:#999;cursor:pointer;">×</button>
+                    </div>
+                    <div class="wx-share-body" style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                        <div id="wxShareCanvas" style="width:210px;height:210px;"></div>
+                        <div class="wx-share-tip" style="font-size:12px;color:#666;">打开微信，点击底部的“发现”，<br />
+                            使用“扫一扫”即可将网页分享至好友。</div>
+                        <div class="wx-share-url"
+                            style="font-size:12px;color:#333;word-break:break-all;text-align:center;display: none;">
+                            链接：<a id="wxShareUrlLink" href="#" target="_blank" rel="noopener"
+                                style="color:#1a73e8;text-decoration:underline;"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <span class="url" style="display: none;">https://appif.sxdaily.com.cn</span>
+            <span class="dateTime" style="display: none;">2025-07-19</span>
+            <span class="paperId" style="display: none;">21</span>
+            <span class="siteId" style="display: none;">3</span>
+            <span class="aritcleId" style="display: none;">913574</span>
+            <span class="articleType" style="display: none;">0</span>
+
+
+</body>
+
+</html>
+<!--js-->
+<script type="text/javascript" src="/resource/templateRes/basic/extras/jquery.min.js"></script>
+<script src="/resource/templateRes/basic/lib/qrcode.min.js?v=20251118"></script>
+<script type="text/javascript" src="/resource/js/lunar.min.js"></script>
+<script type="text/javascript" src="/resource/templateRes/basic/js/sm2.js" charset="utf-8"></script>
+<script type="text/javascript" src="/resource/templateRes/basic/extras/modernizr.2.5.3.min.js"></script>
+<script src="/resource/js/article.js"></script>
+<script type="text/javascript" src="/resource/js/pccalendar.js" charset="utf-8"></script>
+<!--//js-->  

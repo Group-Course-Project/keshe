@@ -2,13 +2,12 @@
 """
 清洗《表格_20261101.csv》：
 1. 校名标准化 + 补充 城区 / 公办民办（来自西安市教育局 2025 招生计划）
-2. 是否住宿：按用户要求随机 mock（随机种子固定，可复现）
+2. 是否住宿：本脚本只写占位 0；0/1 模拟值由 generate_dormitory_mock.py 统一生成
 3. 位次值规范化：左右 / 补录 / —— / 边界 / 区间 / 缺失
 4. 仅保留城六区（碑林/新城/莲湖/雁塔/未央/灞桥）
 产出：data/processed/schools.csv、data/processed/enrollment_records.csv
 """
 import csv
-import random
 from pathlib import Path
 
 SRC = Path(r"C:/Users/liang'yi'yang/Downloads/表格_20261101.csv")
@@ -131,8 +130,9 @@ def main():
     data = rows[1:]
 
     years = [h.strip().split(" ")[0] for h in header[1:]]  # 2020..2025
-    random.seed(42)
 
+    # 住宿是模拟字段，不在清洗流程里偷偷随机；统一交给 generate_dormitory_mock.py。
+    # 这里写 0 占位，保证 processed/schools.csv 结构完整。
     schools = []  # (标准名, 城区, 性质, 住宿, 备注)
     records = []
     excluded = []
@@ -148,8 +148,7 @@ def main():
         if district not in CHENGLIU:
             excluded.append((raw_name, district, nature, note))
             continue
-        dormitory = random.randint(0, 1)
-        schools.append((std, district, nature, dormitory, note))
+        schools.append((std, district, nature, 0, note))
         for yi, cell in enumerate(r[1:]):
             year = years[yi]
             rank, status, original = clean_rank(cell)
