@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
-"""v0.5 校名归一 + 把知识库中的新学校补进 school 表（幂等、可重复执行）。
+"""v0.5 校名归一 + 补录学校（**已停用，保留仅供审计**）。
 
-背景
+!!! 2026-11-09 起系统收敛为「只保留原有 58 所有完整位次数据的学校」。
+!!! 本脚本已从 start_dev.bat 移除；若 school_aliases.csv 重新出现 kind=new 记录，
+!!! run() 会直接抛错，防止 61 所仅资料学校被重新写回 school 表。
+!!! 历史判断依据见 git 提交 c9d54da，或备份目录
+!!! C:/Users/LENOVO/AppData/Local/Temp/keshe_backup_58_20261109/。
+
+背景（历史记录，已不再适用）
 ----
 外部采集的知识库里有 129 个不同的校名，其中只有 57 个能与主推荐库 school
 表的 58 所学校精确对上。剩下的 72 个写法经人工核对后分为两类：
@@ -97,8 +103,13 @@ def guess_district(canonical: str, all_names: set[str], address: str) -> str:
 
 
 def run() -> dict[str, int]:
-    run_migrations()
     rows = read_aliases()
+    if any(r["kind"] == "new" for r in rows):
+        raise RuntimeError(
+            "本脚本已停用：school_aliases.csv 含 kind=new 记录，运行会把 61 所仅资料学校"
+            "重新写回 school 表。系统当前只保留 58 所有完整位次数据的学校。"
+        )
+    run_migrations()
 
     # 每个标准校名关联的所有原始写法（canonical 自身也是知识表里的名字）
     names_of: dict[str, set[str]] = defaultdict(set)

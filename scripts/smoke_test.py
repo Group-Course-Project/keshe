@@ -163,6 +163,22 @@ def main():
     check("特长生项目接口", status == 200 and len(items["体育"]) > 0, f"体育{len(items['体育'])}项")
     status, talents = call("GET", "/talents/schools?category=体育&items=")
     check("特长生学校接口", status == 200 and len(talents["schools"]) > 0, len(talents["schools"]))
+    check("特长生响应带逐年控制线 / 招生名额 / 模拟声明",
+          len(talents["control_lines"]) == 6
+          and any(s["sport_talent_plan"] is not None for s in talents["schools"])
+          and "模拟" in talents["disclaimer"],
+          f"控制线 {len(talents['control_lines'])} 年")
+    check("招生计划项目无 OCR 错字「乓乓球」",
+          all("乓乓球" not in (s["sport_items"] + s["art_items"])
+              for s in talents["schools"]))
+    _, any_match = call("GET", "/talents/schools?category=体育&items=田径,足球&match=any")
+    _, all_match = call("GET", "/talents/schools?category=体育&items=田径,足球&match=all")
+    check("「同时开设全部」是「任一命中」的子集",
+          0 < all_match["total"] <= any_match["total"]
+          and all({"田径", "足球"} <= set(s["matched_items"]) for s in all_match["schools"]),
+          f"all={all_match['total']} any={any_match['total']}")
+    status, bad_match = call("GET", "/talents/schools?category=体育&match=bad")
+    check("非法匹配模式返回 400", status == 400, status)
     status, trend = call("GET", f"/schools/{ids[0]}/trend")
     check("位次趋势接口", status == 200 and len(trend) > 0, len(trend))
     status, check_v = call("POST", "/volunteer/check", {
@@ -181,13 +197,14 @@ def main():
     check("位次区块与完整度标记一致",
           detail["sections"]["rank"]["available"] == detail["school"]["has_rank_data"])
     check("住宿字段附数据来源说明", bool(detail["school"]["dormitory_note"]))
+    check("住宿明确标注为模拟数据",
+          "模拟" in detail["school"]["dormitory_text"]
+          and "generate_dormitory_mock" in detail["school"]["dormitory_note"],
+          detail["school"]["dormitory_text"])
 
-    no_rank = next(s for s in schools if not s["has_rank_data"])
-    status, d2 = call("GET", f"/schools/{no_rank['id']}/detail")
-    check("仅资料学校住宿标注「未采集」", status == 200
-          and d2["school"]["dormitory_text"] == "未采集", d2["school"]["dormitory_text"])
-    check("位次缺失原因明确", not d2["sections"]["rank"]["available"]
-          and "官方未逐校公布" in d2["sections"]["rank"]["reason"])
+    check("学校库收敛为 58 所", len(schools) == 58, f"{len(schools)} 所")
+    check("全部学校均有历年位次", all(s["has_rank_data"] for s in schools),
+          f"{sum(1 for s in schools if s['has_rank_data'])} 所有位次")
 
     bad: list[str] = []
     profile_hit = 0
@@ -217,6 +234,27 @@ def main():
 
     status, missing_school = call("GET", "/schools/999999/detail")
     check("不存在的学校返回 404", status == 404, missing_school.get("detail"))
+
+    # 8.6 数据来源页「查看原件」：本地 PDF 必须返回真实文件，而不是 SPA 首页
+    pdf_req = urllib.request.Request(
+        BASE + "/source-files/" + urllib.parse.quote("2025城六区公办招生计划.pdf"))
+    try:
+        with urllib.request.urlopen(pdf_req, timeout=20) as resp:
+            pdf_status = resp.status
+            pdf_type = resp.headers.get("Content-Type", "")
+            pdf_head = resp.read(5)
+    except urllib.error.HTTPError as e:
+        pdf_status, pdf_type, pdf_head = e.code, "", b""
+    check("本地PDF原件可在线查看",
+          pdf_status == 200 and "application/pdf" in pdf_type
+          and pdf_head.startswith(b"%PDF"), pdf_status)
+    try:
+        with urllib.request.urlopen(
+                urllib.request.Request(BASE + "/source-files/not-exist.pdf"), timeout=20) as resp:
+            bad_status = resp.status
+    except urllib.error.HTTPError as e:
+        bad_status = e.code
+    check("原件端点拒绝非白名单文件", bad_status == 404, bad_status)
 
     # 9. 登出
     status, _ = call("POST", "/auth/logout", token=token_b)

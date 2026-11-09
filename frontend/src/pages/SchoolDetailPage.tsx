@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import {
-  Alert, Button, Card, Descriptions, Empty, Space, Statistic, Table, Tag, Typography,
+  Alert, Button, Card, Descriptions, Empty, Space, Statistic, Table, Tag, Tooltip, Typography,
 } from 'antd'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { fetchSchoolDetail } from '../api'
@@ -17,6 +17,28 @@ const SECTION_LABELS: Record<string, string> = {
   enrollment_plan: '官方招生计划',
   talents: '特长生项目',
   profile: '校园档案',
+}
+
+// data_source.url 有三种语义：外链、本地 PDF 路径、纯文字说明。
+// 只有前两种可点击；纯文字说明若当超链接，会被 Vite 的 SPA 兜底解析成首页。
+function SourceLink({ url, label }: { url: string; label?: string }) {
+  if (!url) return <Typography.Text type="secondary">—</Typography.Text>
+  if (/^https?:\/\//i.test(url)) {
+    return <a href={url} target="_blank" rel="noreferrer">{label ?? '打开'}</a>
+  }
+  const localPdf = url.match(/^data\/raw\/([^/\\]+\.pdf)$/i)
+  if (localPdf) {
+    return (
+      <a href={`/api/source-files/${encodeURIComponent(localPdf[1])}`} target="_blank" rel="noreferrer">
+        {label ?? '查看原件'}
+      </a>
+    )
+  }
+  return (
+    <Tooltip title={url}>
+      <Typography.Text type="secondary" style={{ fontSize: 12 }}>{label ?? '无在线链接'}</Typography.Text>
+    </Tooltip>
+  )
 }
 
 function EmptyReason({ text }: { text: string }) {
@@ -101,12 +123,12 @@ export default function SchoolDetailPage() {
         <Descriptions column={{ xs: 1, sm: 2, md: 3 }} size="small" bordered>
           <Descriptions.Item label="所在城区">{school.district}</Descriptions.Item>
           <Descriptions.Item label="办学性质">{school.school_type}</Descriptions.Item>
-          <Descriptions.Item label="住宿">
+          <Descriptions.Item label="住宿（模拟数据）">
             <Space direction="vertical" size={0}>
               {school.dormitory_text === '未采集' ? (
                 <Typography.Text type="secondary">未采集（不是「不提供」）</Typography.Text>
               ) : (
-                <span>{school.dormitory_text} <Typography.Text type="secondary" style={{ fontSize: 12 }}>（未核实）</Typography.Text></span>
+                <Typography.Text type="secondary">{school.dormitory_text}</Typography.Text>
               )}
               <Typography.Text type="secondary" style={{ fontSize: 12 }}>{school.dormitory_note}</Typography.Text>
             </Space>
@@ -285,14 +307,14 @@ export default function SchoolDetailPage() {
             </Typography.Text>
             {sections.profile.source_url && (
               <Typography.Text style={{ fontSize: 12 }}>
-                档案来源：<a href={sections.profile.source_url} target="_blank" rel="noreferrer">{sections.profile.source_url}</a>
+                档案来源：<SourceLink url={sections.profile.source_url} label={sections.profile.source_url} />
               </Typography.Text>
             )}
           </Space>
         </Card>
       ) : null}
 
-      {/* 缺失区块集中说明，避免 119 所学校里出现大片空洞 */}
+      {/* 缺失区块集中说明，避免 58 所学校里出现大片空洞 */}
       {missing.length > 0 && (
         <Card title={`尚未采集的资料（${missing.length} 类）`}>
           {missing.map((m) => (
@@ -314,7 +336,7 @@ export default function SchoolDetailPage() {
               { title: '来源', dataIndex: 'name' },
               { title: '类型', dataIndex: 'kind', width: 140 },
               { title: '等级', dataIndex: 'credibility', width: 80, render: (v: string) => <Tag color={v === 'A' ? '#56a97a' : undefined}>{v}</Tag> },
-              { title: '链接', dataIndex: 'url', width: 100, render: (v: string) => v ? <a href={v} target="_blank" rel="noreferrer">打开</a> : '—' },
+              { title: '链接', dataIndex: 'url', width: 110, render: (v: string) => <SourceLink url={v} /> },
             ]}
           />
         ) : (

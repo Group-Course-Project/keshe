@@ -35,10 +35,12 @@ cd /d "%ROOT%\backend"
 call .venv\Scripts\python.exe -m app.import_knowledge
 cd /d "%ROOT%"
 
-echo [5/6] Applying school name aliases and adding new schools (idempotent)...
-cd /d "%ROOT%\backend"
-call .venv\Scripts\python.exe -m app.import_schools_extended
+REM 58-school scope: school_aliases.csv now only maps aliases of existing schools.
+REM import_schools_extended is intentionally NOT run (it would re-add 61 incomplete schools).
+
+echo [5/6] Generating mock dormitory flags (0/1, NOT real school data)...
 cd /d "%ROOT%"
+call backend\.venv\Scripts\python.exe scripts\generate_dormitory_mock.py
 
 if not exist "frontend\node_modules\vite\bin\vite.js" (
   echo [6/6] Installing frontend dependencies...

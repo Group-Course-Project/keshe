@@ -88,9 +88,9 @@ w("| --- | --- |")
 w("| `data/knowledge/admission_lines_2020_2025.csv` | 逐年逐校统招线 / 定转统线 / 得分率 / 来源 |")
 w("| `data/knowledge/control_lines_2020_2025.csv` | 历年普高线、特长生线、综合高中班线 |")
 w("| `data/knowledge/score_rank_map_2025.csv` | 2025 分数 → 城六区累计位次（159 档） |")
-w("| `data/knowledge/enrollment_plan_2025.csv` | 教育局官方招生计划与特长生项目（116 校） |")
+w(f"| `data/knowledge/enrollment_plan_2025.csv` | 教育局官方招生计划与特长生项目（{summary['官方招生计划学校数']} 校） |")
 w("| `data/knowledge/school_profiles.csv` | 校园档案：地址、学费、食宿、特色等 |")
-w("| `data/knowledge/school_directory_extended.csv` | 扩展学校名录（116 校，含属性/性质/批次） |")
+w(f"| `data/knowledge/school_directory_extended.csv` | 学校名录（{summary['扩展学校名录']} 校，含属性/性质/批次） |")
 w("| `data/knowledge/data_sources.csv` | 15 个数据源的 URL、类型与可信等级 |")
 w("| `data/raw/web/` | 全部网页原始快照与图片表格转录件（可追溯） |")
 w()
@@ -174,6 +174,11 @@ w()
 w("各年份逐校录取线记录数：" + "、".join(
     f"{y} 年 {n} 条" for y, n in summary["各年份记录数"].items()) + "。")
 w()
+w("> **口径说明（2026-11-09）**：系统只保留原有 58 所有完整历年位次数据的学校。"
+  "上表「覆盖学校数」为校名归一后的实体数；录取线表中另有 2 个历史异写"
+  "（「西安89中」「西安市铁一中国际合作学校」），经 `school_aliases.csv` 归并到主库，"
+  "58 校中有 1 所暂无逐校录取线记录。")
+w()
 w("> 注意：`官方A级记录数` 为 0 —— 这**不是抓取失败**，而是 1.1 节所述「官方不逐校公布」的直接体现。"
   "逐校线的价值在于趋势与相对位置，不能当作权威投档线。")
 w()
@@ -225,7 +230,7 @@ for name in sorted(by_school, key=lambda n: -float(by_school[n].get("2025", {}).
     rows.append([name + (" ✓" if mark else "")] + [g.get(str(y), {}).get("统招线") or "·" for y in range(2020, 2026)])
 M.extend(md_table(["学校", "2020", "2021", "2022", "2023", "2024", "2025"], rows))
 w()
-w(f"共 {len(rows)} 所学校。完整字段（定转统线、得分率、学校属性、办学性质、招生批次、"
+w(f"共 {len(rows)} 个校名写法（其中 2 个为别名，归一后对应 58 所学校）。完整字段（定转统线、得分率、学校属性、办学性质、招生批次、"
   "来源ID、可信等级、交叉校验值、备注）见 `admission_lines_2020_2025.csv`。")
 w()
 

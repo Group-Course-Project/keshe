@@ -99,9 +99,13 @@ export async function fetchTalentItems() {
   return data
 }
 
-export async function fetchTalentSchools(category: string, items: string[]) {
+export async function fetchTalentSchools(
+  category: string,
+  items: string[],
+  match: 'any' | 'all' = 'any',
+) {
   const { data } = await api.get('/talents/schools', {
-    params: { category, items: items.join(',') },
+    params: { category, items: items.join(','), match },
   })
   return data
 }

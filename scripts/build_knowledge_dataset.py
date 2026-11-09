@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-西安中考数据知识库 · 清洗与构建脚本（可重复执行、幂等）
+西安中考数据知识库 · 清洗与构建脚本（**历史采集脚本，已停用**）
+
+!!! 2026-11-09 起系统只保留 58 校口径。本脚本会从 data/raw/web 原始快照
+!!! 重新生成 124 校 / 428 条录取线的 CSV，运行即会覆盖已收敛的知识库。
+!!! main() 内置保护：检测到 dataset_summary.json 的「数据口径」字段会直接拒绝运行。
+!!! 确需重新采集时，请先阅读 README 的 58 校口径说明并同步更新文档与前端。
 
 输入：
   data/raw/web/*.utf8.html          网页原始快照（带来源 URL 注释）
@@ -363,6 +368,12 @@ def build_sources() -> list[list]:
 
 
 def main() -> None:
+    summary_path = OUT / "dataset_summary.json"
+    if summary_path.exists() and "数据口径" in summary_path.read_text(encoding="utf-8"):
+        raise RuntimeError(
+            "本脚本会从原始快照重建 124 校口径 CSV，已停用（当前系统只保留 58 校）。"
+            "如确需重新采集，请先移除本保护并同步更新 build_knowledge_doc.py / README / 前端文案。"
+        )
     print("构建西安中考数据知识库 ...")
     lines = build_admission_lines()
     controls = build_control_lines()

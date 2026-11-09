@@ -33,8 +33,8 @@ export default function SchoolsPage() {
       <Card title="学校档案库">
         <Space direction="vertical" size={12} style={{ width: '100%' }}>
           <Typography.Text type="secondary">
-            共收录 <strong>{schools.length}</strong> 所学校：其中 <strong>{rankable.length}</strong> 所有历年位次、可参与冲稳保推荐；
-            其余 {schools.length - rankable.length} 所只有招生计划 / 录取线 / 校园档案等外部资料，点开档案可查看具体有哪些、缺哪些。
+            共收录 <strong>{schools.length}</strong> 所学校：均有历年位次、可参与冲稳保推荐；
+            点开档案可查看各校的录取线、招生计划、特长生项目与校园资料，以及尚未采集的部分。
           </Typography.Text>
           <Space wrap style={{ width: '100%' }}>
             <Input.Search

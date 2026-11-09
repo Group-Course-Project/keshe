@@ -388,8 +388,13 @@ export default function RecommendPage() {
                 options={DISTRICTS.map((d) => ({ label: d, value: d }))}
               />
             </Form.Item>
-            <Form.Item label="必须提供住宿" name="require_dormitory" valuePropName="checked">
-              <Switch />
+            <Form.Item label="必须提供住宿（模拟数据）" name="require_dormitory" valuePropName="checked">
+              <div>
+                <Switch />
+                <Typography.Text type="secondary" style={{ fontSize: 12, marginLeft: 8 }}>
+                  基于随机生成的 0/1 模拟值，仅供演示，不可作为择校依据
+                </Typography.Text>
+              </div>
             </Form.Item>
             <Form.Item label="公办/民办偏好" name="school_type_preference">
               <Select
@@ -416,7 +421,7 @@ export default function RecommendPage() {
             </Typography.Text>
           </div>
           <Typography.Paragraph type="secondary" style={{ fontSize: 12, marginTop: 8, marginBottom: 0 }}>
-            其余为人工校名归一补录学校，仅有招生计划 / 录取线等资料，城区与住宿信息待核实，不参与位次推荐。
+            全部 58 所均已收录历年录取位次，可参与冲稳保推荐；各校录取线、招生计划与校园档案等资料可在「学校档案」中按校查看。
           </Typography.Paragraph>
           {!user && (
             <Alert

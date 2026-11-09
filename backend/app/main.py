@@ -5,11 +5,16 @@ import statistics
 from collections import defaultdict
 from contextlib import asynccontextmanager
 from datetime import datetime
+from pathlib import Path
+from urllib.parse import quote
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
+
+from .config import BASE_DIR
 
 from .auth import (
     create_session,
@@ -85,7 +90,7 @@ def _identity_user(identity) -> AppUser | None:
 def _canonical_map(db: Session, names: list[str]) -> dict[str, set[str]]:
     """{展示用校名: 该校在知识库里可能出现的全部写法}。
 
-    school_alias 只有 72 行，一次读全表即可，避免逐名查询。
+    school_alias 规模很小（58 校口径下只剩 2 条），一次读全表即可，避免逐名查询。
     没有别名的学校返回 {自身}，行为与归一前完全一致。
     """
     aliases = db.scalars(select(SchoolAlias)).all()
@@ -293,31 +298,100 @@ def talent_items(db: Session = Depends(get_db)):
 
 
 @app.get("/talents/schools")
-def talent_schools(category: str = "体育", items: str = "", db: Session = Depends(get_db)):
+def talent_schools(
+    category: str = "体育",
+    items: str = "",
+    match: str = "any",
+    db: Session = Depends(get_db),
+):
+    """特长生开设学校查询。
+
+    match=any（默认）：任一所选项目命中，保持旧行为；
+    match=all：必须同时开设所选全部项目；
+    items 为空：返回该类别下所有开设特长项目的学校。
+    同时聚合官方招生计划的名额 / 项目 / 特色班，以及逐年特长生控制线。
+    """
+    if category not in ("体育", "艺术"):
+        raise HTTPException(status_code=400, detail="category 只能是 体育 / 艺术")
+    if match not in ("any", "all"):
+        raise HTTPException(status_code=400, detail="match 只能是 any / all")
     item_list = [x.strip() for x in items.split(",") if x.strip()]
-    q = (
-        select(School)
-        .join(SchoolTalent, SchoolTalent.school_id == School.id)
-        .where(SchoolTalent.category == category)
-    )
-    if item_list:
-        q = q.where(SchoolTalent.item.in_(item_list))
-    schools = db.scalars(q.distinct()).all()
+
+    by_school: dict[int, list[SchoolTalent]] = defaultdict(list)
+    for t in db.scalars(select(SchoolTalent)).all():
+        by_school[t.school_id].append(t)
+
+    school_ids: list[int] = []
+    hits: dict[int, list[str]] = {}
+    for sid, talents in by_school.items():
+        offered = {t.item for t in talents if t.category == category}
+        if not offered:
+            continue
+        if not item_list:
+            hit = sorted(offered)
+        elif match == "all":
+            if not set(item_list) <= offered:
+                continue
+            hit = sorted(set(item_list))
+        else:
+            hit = sorted(set(item_list) & offered)
+            if not hit:
+                continue
+        school_ids.append(sid)
+        hits[sid] = hit
+
+    schools = db.scalars(
+        select(School).where(School.id.in_(school_ids)).order_by(School.id)
+    ).all() if school_ids else []
+    cmap = _canonical_map(db, [s.name for s in schools])
+    plan_by_name: dict[str, EnrollmentPlan] = {}
+    for p in db.scalars(select(EnrollmentPlan)).all():
+        for key in (p.school_name, p.raw_name):
+            if key:
+                plan_by_name[key] = p
+
     result = []
     for s in schools:
-        talents = db.scalars(
-            select(SchoolTalent).where(SchoolTalent.school_id == s.id)
-        ).all()
+        plan = next((plan_by_name[n] for n in cmap[s.name] if n in plan_by_name), None)
         result.append({
             "id": s.id,
             "name": s.name,
             "district": s.district,
             "school_type": s.school_type,
             "has_dormitory": s.has_dormitory,
-            "talents": [{"category": t.category, "item": t.item} for t in talents],
+            "talents": [
+                {"category": t.category, "item": t.item}
+                for t in by_school[s.id]
+            ],
+            "matched_items": hits[s.id],
+            "sport_talent_plan": plan.sport_talent_plan if plan else None,
+            "art_talent_plan": plan.art_talent_plan if plan else None,
+            "sport_items": (plan.sport_items or "") if plan else "",
+            "art_items": (plan.art_items or "") if plan else "",
+            "feature_classes": (plan.feature_classes or "") if plan else "",
+            "plan_credibility": plan.credibility if plan else "",
+            "plan_source_id": plan.source_id if plan else "",
         })
+
+    lines = db.scalars(select(ControlLine).order_by(ControlLine.year)).all()
     return {
-        "notice": "体育、艺术特长生按“专项测试 + 文化课过线”录取；2025 年城六区体育、艺术特长生录取控制线为 366.6 分，与文化课统招控制线 611.0 分不同，位次数据仅供参考，不可直接类比。",
+        "category": category,
+        "items": item_list,
+        "match_mode": match,
+        "total": len(result),
+        "notice": (
+            "体育、艺术特长生按「专项测试 + 文化课过线」录取，是独立于统招的赛道；"
+            "文化课过线只代表取得资格，不等于录取，历年位次不可与特长生线直接类比。"
+        ),
+        "disclaimer": (
+            "住宿字段是 scripts/generate_dormitory_mock.py 随机生成的 0/1 模拟值，"
+            "不代表学校真实住宿情况，不可作为择校依据；招生名额来自 2025 年官方招生计划（来源 S11）。"
+        ),
+        "control_lines": [{
+            "year": l.year, "full_score": l.full_score,
+            "general_line": l.general_line, "talent_line": l.talent_line,
+            "credibility": l.credibility, "note": l.note,
+        } for l in lines],
         "schools": result,
     }
 
@@ -607,10 +681,11 @@ def school_detail(school_id: int, db: Session = Depends(get_db)):
             "name": school.name,
             "district": school.district or "待核实",
             "school_type": school.school_type or "待核实",
-            "dormitory_text": ("提供" if school.has_dormitory else "不提供")
+            "dormitory_text": ("模拟·提供" if school.has_dormitory else "模拟·不提供")
                               if is_full else "未采集",
             "dormitory_note": (
-                "示例数据集中的住宿字段为随机生成的占位值，尚未与官方公示核对，不可作为择校依据。"
+                "住宿为 scripts/generate_dormitory_mock.py 随机生成的 0/1 模拟值，"
+                "不代表学校真实住宿情况，不可作为择校依据。"
                 if is_full else
                 "该校住宿信息未采集；「未采集」不等于「不提供」。"
             ),
@@ -1065,6 +1140,32 @@ def knowledge_school(name: str, db: Session = Depends(get_db)):
     }
 
 
+@app.get("/source-files/{filename}")
+def source_file(filename: str):
+    """只读提供 data/raw 下的本地 PDF 原件，供「数据来源」页核验来源。
+
+    data_source.url 里既有外部 HTTP 链接，也有本地文件路径（如 S11）。
+    本地路径不能交给浏览器当超链接（会被前端 SPA 兜底成首页），因此
+    统一由此端点按纯文件名提供，且限制在 data/raw 根目录的 .pdf 内。
+    """
+    if (
+        not filename.lower().endswith(".pdf")
+        or "/" in filename
+        or "\\" in filename
+        or Path(filename).name != filename
+    ):
+        raise HTTPException(status_code=404, detail="文件不存在")
+    raw_dir = (BASE_DIR / "data" / "raw").resolve()
+    target = (raw_dir / filename).resolve()
+    if target.parent != raw_dir or not target.is_file():
+        raise HTTPException(status_code=404, detail="文件不存在")
+    return FileResponse(
+        target,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"inline; filename*=UTF-8''{quote(filename)}"},
+    )
+
+
 @app.get("/knowledge/sources")
 def knowledge_sources(db: Session = Depends(get_db)):
     rows = db.scalars(select(DataSource).order_by(DataSource.id)).all()
@@ -1088,5 +1189,5 @@ def school_aliases(db: Session = Depends(get_db)):
             "confidence": r.confidence,
             "reason": r.reason,
         } for r in rows],
-        "note": "映射依据见 data/knowledge/school_aliases.csv；confidence=medium 的条目建议复核。",
+        "note": "系统当前只保留 58 所有完整位次数据的学校；本表仅含主库已有校的异写映射，依据见 data/knowledge/school_aliases.csv。",
     }

@@ -39,12 +39,12 @@ const appTheme: ThemeConfig = {
 
 const navItems = [
   { to: '/', label: '智能推荐', end: true },
+  { to: '/talents', label: '特长生查询', end: false },
   { to: '/schools', label: '学校档案', end: false },
   { to: '/compare', label: '学校对比', end: false },
   { to: '/plans', label: '我的方案', end: false },
   { to: '/reports', label: '报告历史', end: false },
   { to: '/backtest', label: '回测校准', end: false },
-  { to: '/talents', label: '特长生查询', end: false },
 ]
 
 function AppNav({ onNavigate }: { onNavigate?: () => void }) {

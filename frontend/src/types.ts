@@ -109,16 +109,41 @@ export interface BacktestResponse {
   }[]
 }
 
+export interface TalentControlLine {
+  year: number
+  full_score: number
+  general_line: number | null
+  talent_line: number | null
+  credibility: string
+  note: string
+}
+
+export interface TalentSchool {
+  id: number
+  name: string
+  district: string
+  school_type: string
+  has_dormitory: boolean
+  talents: TalentItem[]
+  matched_items: string[]
+  sport_talent_plan: number | null
+  art_talent_plan: number | null
+  sport_items: string
+  art_items: string
+  feature_classes: string
+  plan_credibility: string
+  plan_source_id: string
+}
+
 export interface TalentSchoolsResponse {
   notice: string
-  schools: {
-    id: number
-    name: string
-    district: string
-    school_type: string
-    has_dormitory: boolean
-    talents: TalentItem[]
-  }[]
+  disclaimer: string
+  category: string
+  items: string[]
+  match_mode: string
+  total: number
+  control_lines: TalentControlLine[]
+  schools: TalentSchool[]
 }
 
 // ---------------- v0.3 用户体系 ----------------

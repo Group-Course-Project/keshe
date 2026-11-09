@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { Alert, Button, Card, Select, Space, Spin, Table, Tag, Typography } from 'antd'
+import { Alert, Button, Card, Select, Space, Spin, Table, Tag, Tooltip, Typography } from 'antd'
 import { useEffect, useState, type ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { compareSchools, fetchSchools } from '../api'
 import CompareChart from '../components/CompareChart'
 import type { CompareResponse, CompareSchool, School } from '../types'
@@ -15,8 +15,16 @@ interface CompareRow {
 const fmt = (value: number | null | undefined, suffix = '') =>
   value == null ? '—' : `${value}${suffix}`
 
+const DORM_TIP = '住宿是随机生成的 0/1 模拟值，不代表学校真实住宿情况，不可作为择校依据。'
+
 export default function ComparePage() {
-  const [ids, setIds] = useState<number[]>([])
+  // 支持从特长生查询页跳转并预选学校：/compare?ids=1,4,7
+  const [searchParams] = useSearchParams()
+  const presetIds = (searchParams.get('ids') ?? '')
+    .split(',').map(Number)
+    .filter((n) => Number.isFinite(n) && n > 0)
+    .slice(0, 4)
+  const [ids, setIds] = useState<number[]>(presetIds)
   const { data: schools = [], isLoading: schoolsLoading } = useQuery<School[]>({
     queryKey: ['schools'],
     queryFn: fetchSchools,
@@ -66,9 +74,15 @@ export default function ComparePage() {
     },
     {
       key: 'dorm',
-      label: '住宿',
+      label: '住宿（模拟）',
       values: list.map((s) =>
-        s.has_rank_data ? (s.has_dormitory ? '提供' : '不提供') : (
+        s.has_rank_data ? (
+          <Tooltip title={DORM_TIP}>
+            <Typography.Text type="secondary">
+              {s.has_dormitory ? '模拟·提供' : '模拟·不提供'}
+            </Typography.Text>
+          </Tooltip>
+        ) : (
           <Typography.Text type="secondary">未采集</Typography.Text>
         ),
       ),
@@ -168,7 +182,7 @@ export default function ComparePage() {
         <Space direction="vertical" size={10} style={{ width: '100%' }}>
           <Typography.Text type="secondary">
             最多同时对比 4 所学校。位次越小代表录取门槛越高；选中后自动刷新对比结果。
-            共收录 {schools.length} 所，其中 {rankable.length} 所有历年位次，标注「仅资料」的只有招生计划/录取线等外部资料。
+            共收录 {schools.length} 所，均有历年位次、可参与冲稳保推荐；各校录取线、招生计划与校园档案可在「学校档案」中查看。
           </Typography.Text>
           <Space.Compact style={{ width: '100%' }}>
             <Select<number[]>
