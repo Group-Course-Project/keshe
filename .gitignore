@@ -4,9 +4,10 @@ __pycache__/
 .venv/
 venv/
 
-# 环境变量与密钥
+# 环境变量与密钥（忽略任意目录下的 .env 及其变体，仅保留可提交的示例模板）
 .env
-backend/.env
+.env.*
+!.env.example
 *.tsbuildinfo
 frontend/tsconfig.tsbuildinfo
 
